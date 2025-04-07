@@ -1,0 +1,29 @@
+name: Deploy built website to Github Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 23
+      - run: npm i
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v4
+
+
+  deploy:
+    needs: build
+
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/deploy-pages@v4
+
+
+
+
